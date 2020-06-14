@@ -1,0 +1,185 @@
+﻿The Single Responsibility Principle it's just a piece of very good advice on how to build systems.
+
+And it specifies that any particular class should have just a single reason to change.
+
+Now I know that sounds cryptic.
+
+So let me give you an example of something that you might build let's suppose that you want to make
+
+a journal where you write down your most intimate thoughts so you make a classical journal and you have
+
+a bunch of entries in the journal so we'll have a private Read-Only list string of entries in your journal
+
+that's going to be initialized so that you don't get any no reference exceptions.
+
+We're also going to keep eight counts of all the elements so private static and count equals zero.
+
+Now given that we have this journal we might want to add entries to this journal.
+
+So I'm going to have a method called Ad entry like so and here I'm going to add an entry which is just
+
+a bunch of text then what I'm going to do is I'm going to say entry's dot and let's say I want to half
+
+of the number of the entry so plus plus count here and I'm going to have the entry itself to be the
+
+text and return.
+
+Also the actual position of that particular entry by the way that's a memento pattern that we're going
+
+to take a look in quite a while.
+
+So in addition to having this add entry You might also want to remove the entry using that index.
+
+So we have something like a public void remove entry which takes an index like so.
+
+And all we have to do here is say entries don't remove at and specify that Patika index.
+
+Not a very stable way of removing entries by the way because once you remove one of the entries all
+
+the indices that you have to the other elements become invalid which is something worth correcting later
+
+on.
+
+But anyways this kind of functionality is relevant to the journey though you might also want to generate
+
+some sort of two string implementation so let's do that.
+
+So I'm going to override two string and what I'm going to do is just join all the entries with a line
+
+breaks all say string join environment dot new line and have the entries here.
+
+So these are my entries and I can start working with them so I can make a journal.
+
+So here down below what we can do is we can say bargee inkwells News-Journal we can add a bunch of entries
+
+so I can say unjaded and entry by the way I hope I didn't make it private so jaded at entry Let's say
+
+I cry today very sad journo.
+
+And then another entry.
+
+Let's say I ate a bug.
+
+So these are the two entries that we can now write line right line the actual entries so we can say
+
+right line J that we'll call to string obviously and we can execute this and hopefully everything goes
+
+fine.
+
+We get our output.
+
+Fingers crossed.
+
+OK.
+
+So both succeeded and here are the two outputs.
+
+Now all the methods inside journo actually relate to the journal so we're adding entries in the journal
+
+we're removing entries.
+
+And in addition we're kind of printing them to the command line or whatever we're just outputting them
+
+to the string.
+
+Now let's suppose that you also want to persist the journey though you might want to save it to a file.
+
+So typically the kind of things that people might do is actually start making methods right here so
+
+you make a method called save and save take maybe the file name.
+
+You could also have different kinds of parameters or here you would do something simple like file daughter
+
+write or text or something to that effect so far that Right-O text like.
+
+So you would write the text to the file name and you would call to string to get the actual text of
+
+course.
+
+So this is the kind of stuff you might want to start adding you with symbole have a method called load
+
+which would actually also take a file name to load from.
+
+And it might actually be a static method that returns a new journal.
+
+So it might be a static Journal load kind of implementation.
+
+In addition you might have another implementation which actually loads from what you are by.
+
+So you might have something like this.
+
+Now the problem here and the reason why we are violating the Single Responsibility Principle is that
+
+we're adding too much responsibility to the journo class.
+
+You can see that the journo is now responsible not only for keeping the entries but also managing all
+
+of this persistence so you might have more than one reason to change the journal not just to change
+
+the way that entries are stored or the functionality for moving them for example.
+
+Because what I've implemented here is not particularly efficient.
+
+But in addition you might also have additional reasons to change this when persistence changes.
+
+So this is something you want to avoid.
+
+And this is something that the Singo irresponsibility kind of mentality should hopefully get you do
+
+not do.
+
+So the idea here is that instead of doing this what you would typically do is you'd make a new class
+
+which handles the persistence of things.
+
+And this is where you would for example make a method called safe file where you can save all sorts
+
+of objects but you can also save journals.
+
+So you would take the journal you would have the file name you would maybe you have a boolean flag for
+
+overriding false by default and then this is where you would do the actual implementation.
+
+So if somebody wants to overwrite or there is no such a file there is no file with the file name.
+
+Then you go have then you file.
+
+All right all text you right all text with the file name file name.
+
+And once again no dought to string what we call the J So Jadot to string and that's how you would serialize
+
+the whole thing.
+
+So now we need two classes for persisting a journal not just the journal itself but also this persistent
+
+class but the consequence and the kind of side effect of this is that you cannot have a separation of
+
+concerns.
+
+So the journal is concerned with keeping a bunch of entries and the persistent class is concerned with
+
+saving whatever object that's being fed whether it's a journal or something else to a file or maybe
+
+to some web stores somewhere so you will save IRP causing you persistence persistence like so and then
+
+you would specify the filename so far.
+
+The equals and then some file name so let's say see temp Journal.
+
+Dorothy XTi And then of course you can actually say Pido it's safe to file.
+
+You can specify the journal the file name and maybe you want to override.
+
+You specify true.
+
+And once this is done we might want to display what actually went on in there so we can say process
+
+that starts so we can just look at the file name file name and see that it actually works.
+
+So if I execute this you can see that the file has been saved here is join the text.
+
+And here is its actual text Choe contacts so everything works just as we expected.
+
+So the whole point of the single responsibility principle is that a typical class is responsible for
+
+one thing and has one reason to change.
